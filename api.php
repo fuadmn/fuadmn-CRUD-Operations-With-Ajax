@@ -48,9 +48,36 @@ function readAll($conn){
 
 }
 
+function registerStudent($conn){
+
+    $studentId = $_POST['student_id'];
+    $studentName = $_POST['name'];
+    $studentClass = $_POST['class'];
+    
+    $data = array();
+    
+    $query = "INSERT INTO student(id,name,class) VALUES('$studentId','$studentName','$studentClass')";
+    
+    $result = $conn->query($query);
+
+    if($result){
+        $data = array("status" => true, "data" => "Registered SuccessFully..");
+    }else{
+        $data = array("status" => false, "data" => $conn->error);
+    }
+
+    echo json_encode($data);
+} 
+
+
+
+
 if(isset($action)){
 
     $action($conn);
+
+}else{
+    echo "Action is Required...";
 
 }
 
